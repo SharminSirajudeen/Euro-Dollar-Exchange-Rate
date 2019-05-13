@@ -58,12 +58,6 @@ class RatesFragment : BaseFragment() {
     }
 
     private fun renderExchangeRate(dateRateList: ArrayList<Pair<Date, Double>>?) {
-        var sharedPreferences = appContext.getSharedPreferences("EXCHANGE_RATE", Context.MODE_PRIVATE)
-        val gson = Gson()
-        val json = gson.toJson(dateRateList)
-        val editor = sharedPreferences.edit()
-        editor.putString("Set", json)
-        editor.apply()
         setData(dateRateList)
         hideProgress()
     }
@@ -146,7 +140,7 @@ class RatesFragment : BaseFragment() {
             var description = Description()
             description.isEnabled = false
             rate_chart.description = description
-            rate_chart.xAxis.axisMaximum = set1.xMax + 0.25f
+            rate_chart.xAxis.axisMaximum = set1.xMax + 10
             rate_chart.axisRight.isEnabled = false
             rate_chart.axisLeft.axisMinimum = set1.yMin - 0.01f
             rate_chart.axisLeft.axisMaximum = set1.yMax + 0.1f
@@ -171,19 +165,7 @@ class RatesFragment : BaseFragment() {
 
     private fun loadRatesList() {
         showProgress()
-
-        var sharedPreferences = appContext.getSharedPreferences("EXCHANGE_RATE", Context.MODE_PRIVATE)
-        var json = sharedPreferences.getString("Set", "")
-        var ratesList = ArrayList<Pair<Date, Double>>()
-        if (json.isNotEmpty()) {
-            ratesList = Gson().fromJson<ArrayList<Pair<Date, Double>>>(json, object : TypeToken<ArrayList<Pair<Date, Double>>>() {}.type)
-                    ?: ArrayList()
-        }
-        if (ratesList.isNotEmpty()) {
-            renderExchangeRate(ratesList)
-        } else {
-            ratesViewModel.loadRates("2010-01-01", "2019-05-12")
-        }
+        ratesViewModel.getRatesForDate("2010-01-01", "2019-05-12")
     }
 
 
