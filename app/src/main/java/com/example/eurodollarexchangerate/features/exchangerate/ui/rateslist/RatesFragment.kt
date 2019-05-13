@@ -60,6 +60,7 @@ class RatesFragment : BaseFragment() {
     private fun renderExchangeRate(dateRateList: ArrayList<Pair<Date, Double>>?) {
         setData(dateRateList)
         rate_chart.visibility = View.VISIBLE
+        progress.visibility = View.GONE
         hideProgress()
     }
 
@@ -166,6 +167,7 @@ class RatesFragment : BaseFragment() {
 
     private fun loadRatesList() {
         showProgress()
+        progress.visibility = View.VISIBLE
         rate_chart.visibility = View.INVISIBLE
         ratesViewModel.loadRates("2010-01-01", "2019-05-12")
     }
@@ -181,6 +183,7 @@ class RatesFragment : BaseFragment() {
 
     private fun renderFailure(@StringRes message: Int) {
         hideProgress()
+        progress.visibility = View.GONE
         notifyWithAction(message, R.string.action_refresh, ::loadRatesList)
     }
 }
