@@ -59,6 +59,7 @@ class RatesFragment : BaseFragment() {
 
     private fun renderExchangeRate(dateRateList: ArrayList<Pair<Date, Double>>?) {
         setData(dateRateList)
+        rate_chart.visibility = View.VISIBLE
         hideProgress()
     }
 
@@ -165,6 +166,7 @@ class RatesFragment : BaseFragment() {
 
     private fun loadRatesList() {
         showProgress()
+        rate_chart.visibility = View.INVISIBLE
         ratesViewModel.loadRates("2010-01-01", "2019-05-12")
     }
 
