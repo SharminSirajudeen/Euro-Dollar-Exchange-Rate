@@ -1,5 +1,6 @@
 package com.example.eurodollarexchangerate.features.exchangerate.ui.rateslist
 
+import android.app.Application
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
 import com.example.eurodollarexchangerate.core.platform.BaseViewModel
@@ -14,8 +15,9 @@ import kotlin.collections.ArrayList
 
 
 class RatesViewModel
-@Inject constructor(private val getRatesList: GetRatesList, val context: Context) : BaseViewModel() {
+@Inject constructor(private val getRatesList: GetRatesList, private val context: Context) : BaseViewModel() {
 
+    //This is an application context, so it will not leak
     var exchangeRates: MutableLiveData<ArrayList<Pair<Date, Double>>> = MutableLiveData()
 
     fun loadRates(start: String, end: String) = getRatesList(GetRatesList.Params(startDate = start, endDate = end)) {
@@ -39,6 +41,7 @@ class RatesViewModel
                     return o1.first.compareTo(o2.first)
                 }
             })
+
         }
         saveData(dates)
         this.exchangeRates.postValue(dates)

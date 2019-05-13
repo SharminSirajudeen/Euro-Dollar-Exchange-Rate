@@ -19,13 +19,13 @@ import java.util.*
 class RatesViewModelTest : AndroidTest() {
 
     private lateinit var ratesViewModel: RatesViewModel
-
+    private val context = context()
     @Mock
     private lateinit var getRatesList: GetRatesList
 
     @Before
     fun setUp() {
-        ratesViewModel = RatesViewModel(getRatesList)
+        ratesViewModel = RatesViewModel(getRatesList, context)
     }
 
     @Test
