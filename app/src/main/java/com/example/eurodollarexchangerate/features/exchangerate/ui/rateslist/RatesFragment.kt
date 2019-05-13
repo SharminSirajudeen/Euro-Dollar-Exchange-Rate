@@ -165,7 +165,7 @@ class RatesFragment : BaseFragment() {
 
     private fun loadRatesList() {
         showProgress()
-        ratesViewModel.getRatesForDate("2010-01-01", "2019-05-12")
+        ratesViewModel.loadRates("2010-01-01", "2019-05-12")
     }
 
 
